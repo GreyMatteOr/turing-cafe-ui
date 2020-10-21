@@ -17,7 +17,7 @@ class ResoForm extends Component {
       readyToSubmit: false,
       warningText: ''
     };
-    this.updateResos = this.props.getResos;
+    this.updateResos = this.props.updateResos;
   }
 
   updateBody(bodyProp, value) {
@@ -31,7 +31,6 @@ class ResoForm extends Component {
 
   isAfterToday(date) {
     let [_, dateMonth, dateDay] = date.split('-');
-    console.log((+dateMonth - 10 || +dateDay - 21) > 0)
     return (+dateMonth - 10 || +dateDay - 21) > 0
   }
 

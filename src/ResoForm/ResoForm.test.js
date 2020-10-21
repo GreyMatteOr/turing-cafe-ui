@@ -23,4 +23,24 @@ describe( 'ResoForm', () => {
     expect(screen.getByText('Create Reservation')).toBeInTheDocument();
     expect(screen.getByTestId('warning')).toBeInTheDocument();
   });
+
+  it( 'should Post and update the screen when appropriate inputs are entered and submited', async () => {
+
+    render(<ResoForm updateResos={mockUpdate}/>);
+
+    userEvent.type(screen.getByPlaceholderText('What is the name for the reservation?'), 'Debugora');
+    userEvent.click(screen.getByText('Create Reservation'));
+
+    await waitFor(() => screen.getByTestId('warning') === 'Nice! We look forward to seeing you!');
+
+    expect(reqs.postNewReso).toHaveBeenCalledWith(
+      {
+        name: "Debugora",
+        date: "10/22",
+        time: "12:00",
+        number: 1
+      }
+    );
+    expect(mockUpdate).toHaveBeenCalled();
+  });
 });
