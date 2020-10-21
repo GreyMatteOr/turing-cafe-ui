@@ -83,7 +83,7 @@ class ResoForm extends Component {
           className='newResoDate'
           value={this.state.resBody.date}
           onChange={event => this.updateBody('date', event.target.value)}
-          placeholder='What date would you like to stop in?'
+          data-testid='dateForNewReso'
         />
         <input
           type='time'
@@ -93,7 +93,7 @@ class ResoForm extends Component {
           className='newResoTime'
           value={this.state.resBody.time}
           onChange={event => this.updateBody('time', event.target.value)}
-          placeholder='What time will you join us?'
+          data-testid='timeForNewReso'
         />
         <input
           type='number'
@@ -102,14 +102,14 @@ class ResoForm extends Component {
           className='newResoGuests'
           value={this.state.resBody.number}
           onChange={event => this.updateBody('number', event.target.value)}
-          placeholder='How many people will be in your party?'
+          data-testid='numberInParty'
         />
         <button
           className='createReso'
           onClick={this.createReso}
           disabled={!this.state.readyToSubmit}
         >Create Reservation</button>
-        <h3 className='warning'>{this.state.warningText}</h3>
+        <h3 className='warning' data-testid='warning'>{this.state.warningText}</h3>
       </>
     )
   }
