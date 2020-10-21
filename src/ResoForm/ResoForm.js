@@ -8,13 +8,14 @@ class ResoForm extends Component {
     this.state = {
       resBody: {
         name: '',
-        date: '',
-        time: '',
+        date: '2020-10-22',
+        time: '12:00',
         number: 0
       },
       postError: false,
       reqError: false,
-      readyToSubmit: false
+      readyToSubmit: false,
+      warningText: ''
     };
     updateResos: this.props.getResos;
   }
@@ -35,6 +36,32 @@ class ResoForm extends Component {
   isAfterToday(date) {
     let [dateMonth, dateDay] = date.date.split('/');
     return (+dateMonth - 10 || +dateDay - 22) > 0
+  }
+
+  createReso() {
+    reqs.postNewReso(this.state.resBody)
+    .then(data => {
+      if (data === 'error') {
+        return this.setState({warningText: 'Hmmm... something went wrong. Give us a call at +1 555-555-555, or refresh and try again.'})
+      }
+      else {
+        this.setState(
+          {
+            resBody: {
+              name: '',
+              date: '2020-10-22',
+              time: '12:00',
+              number: 0
+            },
+            warningText: 'Nice! We look forward to seeing you!'
+          }
+        )
+        this.updateResos();
+      }
+    })
+    .catch( () => {
+      return this.setState({warningText: 'Hmmm... something went wrong. Give us a call at +1 555-555-555, or refresh and try again.'})
+    });
   }
 
   render() {
@@ -81,7 +108,7 @@ class ResoForm extends Component {
           onClick={this.createReso}
           disabled={!this.state.readyToSubmit}
         >Create Reservation</button>
-        <h3 className='warning'>{warningText}</h3>
+        <h3 className='warning'>{this.state.warningText}</h3>
       </>
     )
   }

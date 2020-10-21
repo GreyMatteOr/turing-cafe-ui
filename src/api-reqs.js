@@ -5,7 +5,7 @@ const reqs = {
     return fetch(url + 'reservations')
     .then(response => {
       if (response.ok) return response.json();
-      else return 'error';
+      else return 'error'
     });
   },
 
@@ -16,7 +16,10 @@ const reqs = {
       headers: {
         'Content-Type': 'application/json'
       }
-    }).then(response => response.json());
+    }).then(response => {
+      if (response.ok) return response.json();
+      else return 'error'
+    });
   },
 
   deleteRose(id) {
