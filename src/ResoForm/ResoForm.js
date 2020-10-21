@@ -10,36 +10,36 @@ class ResoForm extends Component {
         name: '',
         date: '2020-10-22',
         time: '12:00',
-        number: 0
+        number: 1
       },
       postError: false,
       reqError: false,
       readyToSubmit: false,
       warningText: ''
     };
-    updateResos: this.props.getResos;
+    this.updateResos = this.props.getResos;
   }
 
   updateBody(bodyProp, value) {
-    if(bodyProp === 'date') {
-      let [year, month, day] = value.split('-');
-      value = `${month}/${day}`;
-    }
     let resBody = this.state.resBody;
-    update[bodyProp] = value;
-    let hasName = update.name !== '';
-    let isAfterToday = this.isAfter(update.date);
+    resBody[bodyProp] = value;
+    let hasName = resBody.name !== '';
+    let isAfterToday = this.isAfterToday(resBody.date);
     let readyToSubmit = hasName && isAfterToday
     this.setState({resBody, readyToSubmit});
   }
 
   isAfterToday(date) {
-    let [dateMonth, dateDay] = date.date.split('/');
-    return (+dateMonth - 10 || +dateDay - 22) > 0
+    let [_, dateMonth, dateDay] = date.split('-');
+    console.log((+dateMonth - 10 || +dateDay - 21) > 0)
+    return (+dateMonth - 10 || +dateDay - 21) > 0
   }
 
-  createReso() {
-    reqs.postNewReso(this.state.resBody)
+  createReso = () => {
+    let body = this.state.resBody;
+    let [_, month, day] = body.date.split('-');
+    body.date = `${month}/${day}`;
+    reqs.postNewReso(body)
     .then(data => {
       if (data === 'error') {
         return this.setState({warningText: 'Hmmm... something went wrong. Give us a call at +1 555-555-555, or refresh and try again.'})
@@ -53,7 +53,8 @@ class ResoForm extends Component {
               time: '12:00',
               number: 0
             },
-            warningText: 'Nice! We look forward to seeing you!'
+            warningText: 'Nice! We look forward to seeing you!',
+            readyToSubmit: false
           }
         )
         this.updateResos();
@@ -96,7 +97,7 @@ class ResoForm extends Component {
         />
         <input
           type='number'
-          min='0'
+          min='1'
           max='30'
           className='newResoGuests'
           value={this.state.resBody.number}

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ResoForm from '../ResoForm/ResoForm.js';
 import './App.css';
 import reqs from '../api-reqs.js';
 
@@ -14,6 +15,10 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.getResos();
+  }
+
+  getResos = () => {
     reqs.getResos()
     .then(data => {
       if (data === 'error') this.setState({reqError: true, isLoading: false});
@@ -55,9 +60,7 @@ class App extends Component {
     return (
       <div className="App">
         <h1 className='app-title'>Turing Cafe Reservations</h1>
-        <div className='resy-form'>
-
-        </div>
+        <ResoForm getResos={this.getResos}/>
         <div className='resy-container'>
           {resoDisplay}
         </div>
