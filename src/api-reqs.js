@@ -22,10 +22,13 @@ const reqs = {
     });
   },
 
-  deleteRose(id) {
+  deleteReso(id) {
     return fetch(url+ `reservations/${id}`, {
       method: 'DELETE'
-    }).then(response => response.json());
+    }).then(response => {
+      if (response.ok) return response.json();
+      else return 'error'
+    });
   }
 }
 

@@ -36,14 +36,22 @@ class App extends Component {
   }
 
   createResoHTML(reso) {
-
     return (
       <div className='reservation' key={reso.id} data-testid='Reservation'>
         <h3 className='reso-name'>Reservation Name: {reso.name}</h3>
         <h4 className='reso-time'>On: {`${reso.date} at ${reso.time}`}</h4>
         <h4 className='party-size'>Number in Party: {reso.number}</h4>
+        <button onClick={() => this.deleteReso(reso.id)}>Delete</button>
       </div>
     )
+  }
+
+  deleteReso = (id) => {
+    reqs.deleteReso(id)
+    .then(data => {
+      if (data === 'error') this.setState({fetchError: true});
+      else this.getResos();
+    }).catch( () => this.setState({fetchError: true}));
   }
 
   render() {
