@@ -66,7 +66,7 @@ class ResoForm extends Component {
 
   render() {
     return (
-      <>
+      <div data-testid='ResoForm'>
         <h3 className='newResoFormTitle'>Make a Reservation</h3>
         <input
           type='text'
@@ -109,7 +109,7 @@ class ResoForm extends Component {
           disabled={!this.state.readyToSubmit}
         >Create Reservation</button>
         <h3 className='warning' data-testid='warning'>{this.state.warningText}</h3>
-      </>
+      </div>
     )
   }
 }
